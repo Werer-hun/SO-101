@@ -12,9 +12,9 @@ robot=joint_config = [
             {'offset': [0, 0, 0.065],    'axis': 'z'} # wrist_roll
         ]
 angles = communication.ask_for_angles(len(robot))
-quats = FK.calc_all_quat(angles)
+quats = FK.calc_all_quat(angles, robot)
 
-transformations = FK.get_transformations(quats)
+transformations = FK.get_transformations(quats, robot)
 
 T_total = FK.end_effector_pose(transformations)
 

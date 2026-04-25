@@ -21,7 +21,7 @@ class Quat_operations:
         ])
 
     @staticmethod
-    def qaut_rot_matrix(q):
+    def qaut_to_rot_matrix(q):
         #Kvaternió -> 3x3 forgatási mátrix
         w, x, y, z = q
         return np.array([

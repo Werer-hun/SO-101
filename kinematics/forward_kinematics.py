@@ -17,29 +17,31 @@ class FK:
         
         self.angles = communication.ask_for_angles(len(self.joint_config))
         
-    def calc_all_quat(self, angles):
+    @staticmethod
+    def calc_all_quat(angles, joint_config):
         quats = []
-        for i, joint in self.joint_config:
+        for i, joint in enumerate(joint_config):
             if joint['axis'] == 'z':
-                q = Quat_operations.axis_angle_to_quat([0, 0, 1], self.angels[i])
+                q = Quat_operations.axis_angle_to_quat([0, 0, 1], angles[i])
             elif joint['axis'] == 'y':
-                q = Quat_operations.axis_angle_to_quat([0, 1, 0], self.angels[i])
+                q = Quat_operations.axis_angle_to_quat([0, 1, 0], angles[i])
             elif joint['axis'] == 'x':
-                q = Quat_operations.axis_angle_to_quat([1, 0, 0], self.angels[i])
+                q = Quat_operations.axis_angle_to_quat([1, 0, 0], angles[i])
             quats.append(q)
         return quats
     
-    def get_transformations(self, quats):
+    @staticmethod
+    def get_transformations(quats, joint_config):
         transformations = []
-        for i, joint in self.joint_config:
-            R = Quat_operations.qaut_rot_matrix(quats[i])
+        for i, joint in enumerate(joint_config):
+            R = Quat_operations.qaut_to_rot_matrix(quats[i])
             T = np.eye(4)
             T[:3, :3] = R
             T[:3, 3] = joint['offset']
             transformations.append(T)
         return transformations
-    
-    def end_effector_pose(self, transformations):
+    @staticmethod
+    def end_effector_pose(transformations):
         T_total = np.eye(4)
         for T in transformations:
             T_total = T_total @ T
