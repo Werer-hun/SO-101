@@ -1,0 +1,11 @@
+def __init__(self):
+        # Most már elmentjük, melyik csukló melyik tengely körül forog
+        # 'z' = függőleges forgás, 'y' = hajlítás
+        self.joint_config = [
+            {'offset': [0, 0, 0.04115], 'axis': 'z'}, # torso
+            {'offset': [0, 0, 0],       'axis': 'z'}, # shoulder_pan
+            {'offset': [0, 0.012, 0.05],'axis': 'y'}, # shoulder_lift (HAJLIK!)
+            {'offset': [0.0001, 0, 0.1],'axis': 'y'}, # elbow_flex (HAJLIK!)
+            {'offset': [0, 0, 0.1],     'axis': 'y'}, # wrist_flex
+            {'offset': [0, 0, 0.065],    'axis': 'z'} # wrist_roll
+        ]
